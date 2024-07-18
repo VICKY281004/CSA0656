@@ -1,0 +1,20 @@
+#include<stdio.h>
+int main()
+{
+	int n,r,temp,sum=0;
+	printf("Vivek Reddy - 192210103\n");
+	printf("enter the numebr:");
+	scanf("%d",&n);
+	temp=n;
+	while(n>0)
+{
+		r=n%10;
+	sum=sum+(r*r*r);
+	n=n/10;
+}
+	if(sum==temp)
+	printf("Amstrong number");
+	else
+	printf("Not a Amstromg number");
+	
+}
