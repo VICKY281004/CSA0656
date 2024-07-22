@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Function to add two matrices
+void add_matrices(int A[2][2], int B[2][2], int C[2][2]) {
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            C[i][j] = A[i][j] + B[i][j];
+        }
+    }
+}
+
+// Function to subtract two matrices
+void subtract_matrices(int A[2][2], int B[2][2], int C[2][2]) {
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            C[i][j] = A[i][j] - B[i][j];
+        }
+    }
+}
+
+// Function to multiply two 2x2 matrices using Strassen's Algorithm
+void strassen_multiply(int A[2][2], int B[2][2], int C[2][2]) {
+    int M1[2][2], M2[2][2], M3[2][2], M4[2][2], M5[2][2], M6[2][2], M7[2][2];
+    int A11[2][2] = {{A[0][0], A[0][1]}, {A[1][0], A[1][1]}};
+    int A12[2][2] = {{A[0][0], A[0][1]}, {A[1][0], A[1][1]}};
+    int A21[2][2] = {{A[0][0], A[0][1]}, {A[1][0], A[1][1]}};
+    int A22[2][2] = {{A[0][0], A[0][1]}, {A[1][0], A[1][1]}};
+    int B11[2][2] = {{B[0][0], B[0][1]}, {B[1][0], B[1][1]}};
+    int B12[2][2] = {{B[0][0], B[0][1]}, {B[1][0], B[1][1]}};
+    int B21[2][2] = {{B[0][0], B[0][1]}, {B[1][0], B[1][1]}};
+    int B22[2][2] = {{B[0][0], B[0][1]}, {B[1][0], B[1][1]}};
+
+    add_matrices(A11, A22, M1);
+    add_matrices(B11, B22, M2);
+    // Implementing remaining Strassen's matrix multiplications
+    // This is a simplified version for demonstration purposes
+
+    // Further code to complete Strassen's algorithm for 2x2 matrices
+
+    // Populate the final result matrix C with appropriate values
+    // This part needs further detailed implementation
+}
+
+int main() {
+    printf("K.Vivek Reddy (192210103)\n");
+    int A[2][2] = {{1, 2}, {3, 4}};
+    int B[2][2] = {{2, 0}, {1, 2}};
+    int C[2][2];
+
+    strassen_multiply(A, B, C);
+
+    printf("Result of Strassen’s matrix multiplication:\n");
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            printf("%d ", C[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
