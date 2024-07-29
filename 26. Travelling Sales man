@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define N 4  // Number of cities
+
+// Function to find the minimum of two numbers
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+// Function to solve the Traveling Salesman Problem using Dynamic Programming
+int tsp(int graph[N][N]) {
+    int dp[1 << N][N];  // 2D array to store the minimum cost
+    int VISITED_ALL = (1 << N) - 1;  // All cities visited bitmask
+
+    // Initialize dp array with infinity (INT_MAX)
+    for (int i = 0; i < (1 << N); i++) {
+        for (int j = 0; j < N; j++) {
+            dp[i][j] = INT_MAX;
+        }
+    }
+
+    // Start from the first city, hence cost is 0
+    dp[1][0] = 0;
+
+    // Iterate through all subsets of cities
+    for (int mask = 1; mask < (1 << N); mask++) {
+        for (int u = 0; u < N; u++) {
+            if (mask & (1 << u)) {  // Check if u-th city is visited in the current subset
+                for (int v = 0; v < N; v++) {
+                    if ((mask & (1 << v)) == 0) {  // Check if v-th city is not visited
+                        if (dp[mask][u] != INT_MAX && dp[mask][u] + graph[u][v] < dp[mask | (1 << v)][v]) {
+                            dp[mask | (1 << v)][v] = dp[mask][u] + graph[u][v];
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Find the minimum cost to visit all cities and return to the starting city
+    int result = INT_MAX;
+    for (int i = 1; i < N; i++) {
+        if (dp[VISITED_ALL][i] != INT_MAX) {
+            result = min(result, dp[VISITED_ALL][i] + graph[i][0]);
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    // Adjacency matrix for the graph
+    int graph[N][N] = {
+        {0, 10, 15, 20},
+        {10, 0, 35, 25},
+        {15, 35, 0, 30},
+        {20, 25, 30, 0}
+    };
+
+    int result = tsp(graph);
+    printf("The minimum cost to visit all cities is %d\n", result);
+    return 0;
+}
