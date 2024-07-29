@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void subsetSum(int set[], int t[], int size, int t_size, int sum, int ite, int const target_sum) {
+    if (target_sum == sum) {
+        printf("{");
+        for (int i = 0; i < t_size; i++) {
+            printf("%d ", t[i]);
+        }
+        printf("}\n");
+        return;
+    }
+    for (int i = ite; i < size; i++) {
+        t[t_size] = set[i];
+        subsetSum(set, t, size, t_size + 1, sum + set[i], i + 1, target_sum);
+    }
+}
+
+void generateSubsets(int set[], int size, int target_sum) {
+    int* t = (int*)malloc(size * sizeof(int));
+    subsetSum(set, t, size, 0, 0, 0, target_sum);
+    free(t);
+}
+
+int main() {
+    int size, target_sum;
+
+    printf("Enter the size of the set: ");
+    scanf("%d", &size);
+
+    int* set = (int*)malloc(size * sizeof(int));
+
+    printf("Enter the elements of the set:\n");
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &set[i]);
+    }
+
+    printf("Enter the target sum: ");
+    scanf("%d", &target_sum);
+
+    printf("Subsets that sum to %d are:\n", target_sum);
+    generateSubsets(set, size, target_sum);
+
+    free(set);
+    return 0;
+}
